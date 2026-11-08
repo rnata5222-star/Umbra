@@ -196,5 +196,6 @@ function pasted(){const t=$('pt').value;if(!t)return;$('pg').close();$('pt').val
 ['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();dz.classList.remove('over')}));
 dz.addEventListener('drop',e=>add(e.dataTransfer.files));
 render();
+(async()=>{if(!/[?&]shared=1/.test(location.search)||!window.caches)return;try{const c=await caches.open('umbra-share'),fs=[];for(const k of await c.keys()){const r=await c.match(k),b=await r.blob(),n=r.headers.get('x-name');fs.push(new File([b],n?decodeURIComponent(n):'compartido',{lastModified:+r.headers.get('x-mod')||Date.now()}));await c.delete(k)}history.replaceState(null,'',location.pathname);if(fs.length){go('app');add(fs)}}catch(e){}})();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
